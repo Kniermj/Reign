@@ -5,9 +5,11 @@ public class CommandLineExecution implements Runnable {
 
     private Thread running = null;
     private CommandFeeder feeder;
+    private CommandOutput out;
 
-    CommandLineExecution(CommandFeeder feeder){
+    CommandLineExecution(CommandFeeder feeder, CommandOutput out){
         this.feeder = feeder;
+        this.out = out;
     }
 
     @Override
@@ -31,6 +33,11 @@ public class CommandLineExecution implements Runnable {
 
         String line = "";
         while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             if(feeder.hasCommand()){
                 CommandObject input = feeder.getNextCommand();
                 try {
@@ -38,10 +45,10 @@ public class CommandLineExecution implements Runnable {
                     writer.flush();
                     line = reader.readLine();
                     while (line != null && !line.trim().equals("--EOF--")) {
-                        input.commandOutput += line;
-                        System.out.println("Stdout: " + line);
+                        input.commandOutput += line + "\n";
                         line = reader.readLine();
                     }
+                    out.output(input);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

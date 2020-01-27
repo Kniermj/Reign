@@ -1,9 +1,14 @@
+import com.google.cloud.firestore.annotation.DocumentId;
+
 public class CommandObject {
 
+    @DocumentId
+    public String documentId;
     public String commandInput;
     public String commandOutput;
 
-    CommandObject(String commandInput){
+    public CommandObject(){}
+    public CommandObject(String commandInput){
         this.commandInput = commandInput;
     }
 
