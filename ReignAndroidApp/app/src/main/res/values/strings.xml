@@ -4,4 +4,7 @@
     <string name="rosefire_login">ROSEFIRE LOGIN</string>
     <string name="logout">Logout</string>
     <string name="settings">Settings</string>
+    <string name="system_name">System Name</string>
+    <string name="usage_high">High</string>
+    <string name="system_active">Active</string>
 </resources>
