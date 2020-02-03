@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args){
         Firestore db = null;
         try {
-            InputStream serviceAccount = ClassLoader.getSystemResourceAsStream("reign-76b44-firebase-adminsdk-npgy4-141c9e4d7b.json");
+            InputStream serviceAccount = ClassLoader.getSystemResourceAsStream("reign-76b44-firebase-adminsdk-npgy4-02aae91faa.json");
             GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(credentials)
