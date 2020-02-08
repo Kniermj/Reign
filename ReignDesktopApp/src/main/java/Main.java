@@ -27,9 +27,13 @@ public class Main {
         SystemCheckIn check = new SystemCheckIn(db);
         SystemIdentity identity = check.getSystemIdentity();
 
+        RegisterUser register = new RegisterUser(db, identity);
+
         CommandFeeder feeder = new CommandFeederQueue(identity, db);
         CommandOutput out = new FirestoreCommandOutput(identity, db);
         CommandLineExecution command  = new CommandLineExecution(feeder, out);
+
+
         command.start();
 
     }

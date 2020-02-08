@@ -11,6 +11,7 @@ public class SystemIdentity {
     public int refreshtime;
     public boolean active;
     public CommandObject processing;
+    public String owner;
 
     public SystemIdentity(){
 
@@ -20,6 +21,7 @@ public class SystemIdentity {
         this.refreshtime = refreshtime;
         this.active = active;
         processing = null;
+        owner = "";
     }
 
 
