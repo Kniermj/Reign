@@ -9,11 +9,16 @@ import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import edu.rosehulman.kniermj.reignandroidapp.Login.LoginButtonListener
 import edu.rosehulman.kniermj.reignandroidapp.Login.SplashLoginFragment
+import edu.rosehulman.kniermj.reignandroidapp.SystemInfo.SystemInfoFragment
+import edu.rosehulman.kniermj.reignandroidapp.SystemList.ComputerSystem
+import edu.rosehulman.kniermj.reignandroidapp.SystemList.OnSystemSelectlistener
 import edu.rosehulman.kniermj.reignandroidapp.SystemList.SystemListFragment
 import edu.rosehulman.rosefire.Rosefire
 
 class MainActivity : AppCompatActivity(),
-LoginButtonListener{
+    LoginButtonListener,
+    OnSystemSelectlistener{
+
 
     private val auth = FirebaseAuth.getInstance()
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
@@ -64,6 +69,10 @@ LoginButtonListener{
         rosefireLogin()
     }
 
+    override fun onSystemSelected(sys: ComputerSystem) {
+        switchToSystemInfo(sys)
+    }
+
     private fun rosefireLogin() {
         val signInIntent = Rosefire.getSignInIntent(this, getString(R.string.rose_fire_token))
         startActivityForResult(signInIntent, Constants.RC_ROSEFIRE_LOGIN)
@@ -105,9 +114,17 @@ LoginButtonListener{
     private fun SwitchToDefault(uid: String) {
         Log.d(Constants.TAG, "user logged in going to default screen")
         Log.d(Constants.TAG, "new login with UID: $uid")
-        val mainFragment = SystemListFragment()
+        val mainFragment = SystemListFragment.newInstance(uid)
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.main_fragment, mainFragment)
+        ft.commit()
+    }
+
+    private fun switchToSystemInfo(sys: ComputerSystem){
+        val systemFragment = SystemInfoFragment.newInstance(sys)
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.main_fragment, systemFragment)
+        ft.addToBackStack("save")
         ft.commit()
     }
 }

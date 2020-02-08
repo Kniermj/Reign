@@ -7,4 +7,16 @@
     <string name="system_name">System Name</string>
     <string name="usage_high">High</string>
     <string name="system_active">Active</string>
+    <string name="system_id">System ID</string>
+    <string name="system_token">System Token</string>
+    <string name="default_system_name">System Name</string>
+    <string name="stats">Stats</string>
+    <string name="default_cpu_percent">CPU: 20%</string>
+    <string name="default_mem_percent">MEM: 10%</string>
+    <string name="view_processes">View Processes</string>
+    <string name="commands">Commands</string>
+    <string name="queue">Queue</string>
+    <string name="deafult_queue_size">0</string>
+    <string name="output">Output</string>
+    <string name="view_history">View History</string>
 </resources>
