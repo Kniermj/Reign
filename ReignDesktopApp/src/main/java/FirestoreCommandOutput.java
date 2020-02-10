@@ -15,12 +15,12 @@ public class FirestoreCommandOutput implements CommandOutput {
     public boolean output(CommandObject obj) {
         updateSystemState();
         updateSystemCommandQueue(obj);
-        updayeSystemCommandHistory(obj);
+        updateSystemCommandHistory(obj);
 //        System.out.println(obj.commandOutput);
         return true;
     }
 
-    private void updayeSystemCommandHistory(CommandObject obj) {
+    private void updateSystemCommandHistory(CommandObject obj) {
         DocumentReference docRef = this.db.collection("systems")
                 .document(identity.documentId)
                 .collection("CommandHistory")
