@@ -1,12 +1,22 @@
 <resources>
     <string name="app_name">ReignAndroidApp</string>
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="login">Login</string>
+    <string name="rosefire_login">ROSEFIRE LOGIN</string>
+    <string name="logout">Logout</string>
+    <string name="settings">Settings</string>
+    <string name="system_name">System Name</string>
+    <string name="usage_high">High</string>
+    <string name="system_active">Active</string>
+    <string name="system_id">System ID</string>
+    <string name="system_token">System Token</string>
+    <string name="default_system_name">System Name</string>
+    <string name="stats">Stats</string>
+    <string name="default_cpu_percent">CPU: 20%</string>
+    <string name="default_mem_percent">MEM: 10%</string>
+    <string name="view_processes">View Processes</string>
+    <string name="commands">Commands</string>
+    <string name="queue">Queue</string>
+    <string name="deafult_queue_size">0</string>
+    <string name="output">Output</string>
+    <string name="view_history">View History</string>
 </resources>
