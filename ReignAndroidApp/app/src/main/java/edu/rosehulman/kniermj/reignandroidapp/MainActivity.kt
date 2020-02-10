@@ -7,8 +7,11 @@ import android.view.Menu
 import android.view.MenuItem
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
+import edu.rosehulman.kniermj.reignandroidapp.ComandQueue.CommandQueueListFragment
+import edu.rosehulman.kniermj.reignandroidapp.HistoryQueue.CommandHistoryListFragment
 import edu.rosehulman.kniermj.reignandroidapp.Login.LoginButtonListener
 import edu.rosehulman.kniermj.reignandroidapp.Login.SplashLoginFragment
+import edu.rosehulman.kniermj.reignandroidapp.SystemInfo.OnSystemScreenChange
 import edu.rosehulman.kniermj.reignandroidapp.SystemInfo.SystemInfoFragment
 import edu.rosehulman.kniermj.reignandroidapp.SystemList.ComputerSystem
 import edu.rosehulman.kniermj.reignandroidapp.SystemList.OnSystemSelectlistener
@@ -17,7 +20,9 @@ import edu.rosehulman.rosefire.Rosefire
 
 class MainActivity : AppCompatActivity(),
     LoginButtonListener,
-    OnSystemSelectlistener{
+    OnSystemSelectlistener,
+    OnSystemScreenChange{
+
 
 
     private val auth = FirebaseAuth.getInstance()
@@ -73,6 +78,13 @@ class MainActivity : AppCompatActivity(),
         switchToSystemInfo(sys)
     }
 
+    override fun onCommandQueueSelected(sysId: String) {
+        switchToCommandQueue(sysId)
+    }
+    override fun onCommandHistorySelected(sysId: String) {
+        switchToCommandHistory(sysId)
+    }
+
     private fun rosefireLogin() {
         val signInIntent = Rosefire.getSignInIntent(this, getString(R.string.rose_fire_token))
         startActivityForResult(signInIntent, Constants.RC_ROSEFIRE_LOGIN)
@@ -122,6 +134,23 @@ class MainActivity : AppCompatActivity(),
 
     private fun switchToSystemInfo(sys: ComputerSystem){
         val systemFragment = SystemInfoFragment.newInstance(sys)
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.main_fragment, systemFragment)
+        ft.addToBackStack("save")
+        ft.commit()
+    }
+
+    private fun switchToCommandQueue(sysId: String) {
+        val systemFragment = CommandQueueListFragment.newInstance(sysId)
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.main_fragment, systemFragment)
+        ft.addToBackStack("save")
+        ft.commit()
+    }
+
+    private fun switchToCommandHistory(sysId: String) {
+        Log.d(Constants.TAG, "switching to history fragment")
+        val systemFragment = CommandHistoryListFragment.newInstance(sysId)
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.main_fragment, systemFragment)
         ft.addToBackStack("save")

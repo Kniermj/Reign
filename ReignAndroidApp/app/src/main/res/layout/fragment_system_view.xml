@@ -116,6 +116,7 @@
                 android:text="@string/queue"
                 android:layout_margin="20dp"/>
             <TextView
+                android:id="@+id/queue_size_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/deafult_queue_size"
@@ -136,6 +137,7 @@
                 android:text="@string/output"
                 android:layout_margin="10dp"/>
             <TextView
+                android:id="@+id/history_size_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/deafult_queue_size"
