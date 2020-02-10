@@ -1,5 +1,7 @@
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -13,10 +15,12 @@ import java.util.concurrent.ExecutionException;
 public class SystemCheckIn {
     private Firestore db;
     private String systemID;
+    private SystemIdentity identity;
 
     public SystemCheckIn(Firestore db){
         this.db = db;
         this.systemID = loadSavedID();
+        identity = null;
         try {
             if(!checkIfRegistred()){
                 registerWithFirestore();
@@ -34,14 +38,23 @@ public class SystemCheckIn {
             ApiFuture<DocumentSnapshot> future = docRef.get();
             DocumentSnapshot document = future.get();
             if(document.exists()){
-                return  document.toObject(SystemIdentity.class);
+                identity = document.toObject(SystemIdentity.class);
+                SystemIdentityUpdater();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-        return null;
+        return identity;
+    }
+
+    private void SystemIdentityUpdater(){
+        db.collection("systems").document(identity.documentId).addSnapshotListener((snapshot, e)->{
+            SystemIdentity updatedIdentity = snapshot.toObject(SystemIdentity.class);
+            identity = updatedIdentity;
+            System.out.println("system identity has been updated");
+        } );
     }
 
     private boolean checkIfRegistred() throws ExecutionException, InterruptedException {
