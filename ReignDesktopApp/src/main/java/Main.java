@@ -48,18 +48,23 @@ public class Main {
         SystemResourceFinder systemRes = new SystemResourceFinder(systemOut);
 
 
-//        command.start();
-//        res.start();
+        command.start();
+        res.start();
         systemRes.start();;
 
         Runtime.getRuntime().addShutdownHook(new Thread()
         {
             public void run()
             {
+                System.out.println("stopping");
                 systemRes.stop();
+                res.stop();
+                command.stop();
                 check.shutdown();
             }
         });
+
+        System.out.println("setup");
 
     }
 }
