@@ -1,3 +1,6 @@
+import CommandLine.CommandObject;
+import CommandLine.CommandOutput;
+
 public class OutputPrinter implements CommandOutput {
 
     @Override

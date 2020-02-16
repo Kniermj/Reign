@@ -1,7 +1,6 @@
+import Utils.SystemIdentity;
 import com.google.cloud.firestore.DocumentChange;
-import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;

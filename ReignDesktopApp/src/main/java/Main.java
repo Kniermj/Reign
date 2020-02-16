@@ -1,3 +1,12 @@
+import CommandLine.*;
+import ProcessStats.FirestoreProcessOutput;
+import ProcessStats.ProcessFinderTrigger;
+import ProcessStats.ProcessRefresh;
+import ProcessStats.ProcesssFinder;
+import SystemStats.FirestoreResourceOutput;
+import SystemStats.SystemResourceFinder;
+import SystemStats.SystemResourceOut;
+import Utils.SystemCheckIn;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
 
@@ -5,8 +14,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -25,16 +32,34 @@ public class Main {
             e.printStackTrace();
         }
         SystemCheckIn check = new SystemCheckIn(db);
-        SystemIdentity identity = check.getSystemIdentity();
+        check.getSystemIdentity();
 
-        RegisterUser register = new RegisterUser(db, identity);
+        RegisterUser register = new RegisterUser(db, check.identity);
 
-        CommandFeeder feeder = new CommandFeederQueue(identity, db);
-        CommandOutput out = new FirestoreCommandOutput(identity, db);
-        CommandLineExecution command  = new CommandLineExecution(feeder, out);
+        CommandFeeder feeder = new CommandFeederQueue(check.identity, db);
+        CommandOutput commandOut = new FirestoreCommandOutput(check.identity, db);
+        CommandLineExecution command  = new CommandLineExecution(feeder, commandOut);
+
+        FirestoreProcessOutput processoutput = new FirestoreProcessOutput(check.identity, db);
+        ProcessFinderTrigger trigger = new ProcessRefresh(check, db);
+        ProcesssFinder res = new ProcesssFinder(processoutput, trigger);
+
+        SystemResourceOut systemOut = new FirestoreResourceOutput(check.identity, db);
+        SystemResourceFinder systemRes = new SystemResourceFinder(systemOut);
 
 
-        command.start();
+//        command.start();
+//        res.start();
+        systemRes.start();;
+
+        Runtime.getRuntime().addShutdownHook(new Thread()
+        {
+            public void run()
+            {
+                systemRes.stop();
+                check.shutdown();
+            }
+        });
 
     }
 }
