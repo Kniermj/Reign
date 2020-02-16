@@ -30,7 +30,6 @@ public class CommandFeederQueue implements CommandFeeder {
                         recentCommands.add(loadedObj);
                     }
                     commandQueue = recentCommands;
-                    System.out.println(commandQueue.size());
                 });
 
 
@@ -48,7 +47,6 @@ public class CommandFeederQueue implements CommandFeeder {
 
     @Override
     public boolean hasCommand() {
-        System.out.println(!this.commandQueue.isEmpty());
         return !this.commandQueue.isEmpty();
     }
 

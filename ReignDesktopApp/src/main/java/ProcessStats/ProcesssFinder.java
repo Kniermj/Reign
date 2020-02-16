@@ -25,7 +25,6 @@ public class ProcesssFinder implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("process: " + trigger.runProcessFinder());
             if(trigger.runProcessFinder()){
                 List<ProcessStat> currentProc = getCurrentProccess();
                 output.output(currentProc);
@@ -82,7 +81,6 @@ public class ProcesssFinder implements Runnable {
 
     private ProcessStat makeFromCMDLine(String line){
         String[] info = line.split("\\s+");
-        System.out.println(info[info.length - 3] + "  " + info[info.length - 1]);
         return new ProcessStat(info[info.length - 3], info[info.length - 1]);
     }
 

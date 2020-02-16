@@ -41,7 +41,7 @@ public class SystemCheckIn {
             if(document.exists()){
                 identity = document.toObject(SystemIdentity.class);
                 identity.active = true;
-                db.collection("systems").document(systemID).set(identity);
+                db.collection("systems").document(systemID).set(identity).isDone();
                 SystemIdentityUpdater();
             }
         } catch (InterruptedException e) {

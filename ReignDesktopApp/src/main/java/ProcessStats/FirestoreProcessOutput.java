@@ -41,7 +41,6 @@ public class FirestoreProcessOutput implements ProcessOutput {
         for (DocumentReference doc: processes) {
             doc.delete();
         }
-        System.out.println("items deleted");
 
     }
 
@@ -49,6 +48,5 @@ public class FirestoreProcessOutput implements ProcessOutput {
         for (ProcessStat proc: status) {
             processRef.add(proc);
         }
-        System.out.println("items added");
     }
 }

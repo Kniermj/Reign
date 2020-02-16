@@ -18,7 +18,6 @@ public class FirestoreCommandOutput implements CommandOutput {
         updateSystemState();
         updateSystemCommandQueue(obj);
         updateSystemCommandHistory(obj);
-//        System.out.println(obj.commandOutput);
         return true;
     }
 
@@ -28,7 +27,6 @@ public class FirestoreCommandOutput implements CommandOutput {
                 .collection("CommandHistory")
                 .document();
         docRef.set(obj);
-        System.out.println(obj.documentId + " moved to history");
     }
 
     private void updateSystemCommandQueue(CommandObject obj) {
@@ -37,13 +35,11 @@ public class FirestoreCommandOutput implements CommandOutput {
                 .collection("CommandQueue")
                 .document(obj.documentId);
         docRef.delete();
-        System.out.println(obj.documentId + " removed");
     }
 
     private void updateSystemState() {
         this.identity.processing = null;
         DocumentReference docRef = this.db.collection("systems").document(identity.documentId);
         docRef.set(this.identity);
-        System.out.println("system updated");
     }
 }
