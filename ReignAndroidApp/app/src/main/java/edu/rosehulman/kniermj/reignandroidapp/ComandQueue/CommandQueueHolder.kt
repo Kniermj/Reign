@@ -13,6 +13,18 @@ class CommandQueueHolder: RecyclerView.ViewHolder {
 
     constructor(itemView: View, adapter: CommandQueueListAdapter): super(itemView){
 
+        itemView.moveUp.setOnClickListener {
+            adapter.moveItemUp(adapterPosition)
+        }
+        itemView.moveDown.setOnClickListener {
+            adapter.moveItemDown(adapterPosition)
+        }
+
+        itemView.setOnLongClickListener {
+            adapter.editCommand(adapterPosition)
+            true
+        }
+
     }
 
     public fun bind(item: CommandQueueItem){

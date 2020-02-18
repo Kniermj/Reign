@@ -25,4 +25,17 @@
     <string name="history_output">History Output</string>
     <string name="history_command_heading">Command:</string>
     <string name="history_output_heading">Output:</string>
+    <string name="process_name">Process Name</string>
+    <string name="process_id">PID</string>
+    <string name="refresh">Refresh</string>
+    <string name="pid">PID:</string>
+    <string name="temp_pid">111111</string>
+    <string name="process_view_title">Process View</string>
+    <string name="program_name_temp">Program Name</string>
+    <string name="name_title">Name:</string>
+    <string name="kill_process">Kill Process</string>
+    <string name="active">Active</string>
+    <string name="inactive">Inactive</string>
+    <string name="deleted">Deleted</string>
+    <string name="undo">UNDO</string>
 </resources>

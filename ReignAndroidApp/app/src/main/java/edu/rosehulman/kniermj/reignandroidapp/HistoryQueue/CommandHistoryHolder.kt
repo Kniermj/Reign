@@ -13,7 +13,7 @@ class CommandHistoryHolder: RecyclerView.ViewHolder {
     var commandOutputEntry = itemView.command_history_output
 
     constructor(itemView: View, adapter: CommandHistoryListAdapter): super(itemView){
-
+        adapter.itemCount
     }
 
     public fun bind(item: CommandQueueItem){

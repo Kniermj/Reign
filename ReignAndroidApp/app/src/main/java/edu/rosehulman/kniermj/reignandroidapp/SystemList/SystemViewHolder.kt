@@ -1,22 +1,27 @@
 package edu.rosehulman.kniermj.reignandroidapp.SystemList
 
+import android.content.Context
 import android.graphics.Color
-import android.provider.SyncStateContract
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.common.io.Resources
+import com.google.common.io.Resources.getResource
 import edu.rosehulman.kniermj.reignandroidapp.Constants
+import edu.rosehulman.kniermj.reignandroidapp.R
 import kotlinx.android.synthetic.main.system_card_view.view.*
 
-class SystemViewHolder : RecyclerView.ViewHolder {
+class SystemViewHolder: RecyclerView.ViewHolder {
 
     var nameText = itemView.system_name
-    var usageText = itemView.system_usage
     var activeText = itemView.system_active
+    var context: Context? =  null
 
 
-    constructor(itemView: View, adapter: SystemListAdapter): super(itemView){
-        itemView.setOnClickListener { v: View? ->
+    constructor(itemView: View, adapter: SystemListAdapter, context: Context): super(itemView){
+        this.context = context
+        itemView.setOnClickListener { _: View? ->
             Log.d(Constants.TAG, "system clicked")
             adapter.onSystemPressed(adapterPosition)
             true
@@ -26,13 +31,14 @@ class SystemViewHolder : RecyclerView.ViewHolder {
 
     fun bind(system: ComputerSystem) {
         nameText.setText(system.name)
-        usageText.setText("high")
-        activeText.setText(system.active.toString())
-
         if(system.active){
-            itemView.setBackgroundColor(Color.WHITE)
+            val color = ContextCompat.getColor(context!!, R.color.colorPrimary)
+            itemView.main_system_card_layout.setBackgroundColor(color)
+            activeText.setText(R.string.active)
         }else{
-            itemView.setBackgroundColor(Color.RED)
+            val color = ContextCompat.getColor(context!!, R.color.colorPrimaryDark)
+            itemView.main_system_card_layout.setBackgroundColor(color)
+            activeText.setText(R.string.inactive)
         }
     }
 }

@@ -17,7 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="@string/login"/>
+        android:text="@string/login"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"/>
 
     <Button
         android:id="@+id/rose_fire_login_button"
@@ -26,6 +28,8 @@
         android:layout_below="@id/login_button"
         android:layout_centerInParent="true"
         android:layout_marginTop="90dp"
-        android:text="@string/rosefire_login"/>
+        android:text="@string/rosefire_login"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"/>
 
 </RelativeLayout>

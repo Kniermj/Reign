@@ -8,9 +8,11 @@ import android.view.MenuItem
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import edu.rosehulman.kniermj.reignandroidapp.ComandQueue.CommandQueueListFragment
+import edu.rosehulman.kniermj.reignandroidapp.HistoryGraph.GraphFragment
 import edu.rosehulman.kniermj.reignandroidapp.HistoryQueue.CommandHistoryListFragment
 import edu.rosehulman.kniermj.reignandroidapp.Login.LoginButtonListener
 import edu.rosehulman.kniermj.reignandroidapp.Login.SplashLoginFragment
+import edu.rosehulman.kniermj.reignandroidapp.Processes.ProcessListFragment
 import edu.rosehulman.kniermj.reignandroidapp.SystemInfo.OnSystemScreenChange
 import edu.rosehulman.kniermj.reignandroidapp.SystemInfo.SystemInfoFragment
 import edu.rosehulman.kniermj.reignandroidapp.SystemList.ComputerSystem
@@ -22,8 +24,6 @@ class MainActivity : AppCompatActivity(),
     LoginButtonListener,
     OnSystemSelectlistener,
     OnSystemScreenChange{
-
-
 
     private val auth = FirebaseAuth.getInstance()
     lateinit var authStateListener: FirebaseAuth.AuthStateListener
@@ -83,6 +83,14 @@ class MainActivity : AppCompatActivity(),
     }
     override fun onCommandHistorySelected(sysId: String) {
         switchToCommandHistory(sysId)
+    }
+
+    override fun onProcessesSelected(sysId: String) {
+        switchToProcessesFragment(sysId)
+    }
+
+    override fun onHistoryGraphPressed(sysId: String) {
+        switchToGraphFragment(sysId)
     }
 
     private fun rosefireLogin() {
@@ -149,10 +157,28 @@ class MainActivity : AppCompatActivity(),
     }
 
     private fun switchToCommandHistory(sysId: String) {
-        Log.d(Constants.TAG, "switching to history fragment")
+        Log.d(Constants.TAG, "switching to output fragment")
         val systemFragment = CommandHistoryListFragment.newInstance(sysId)
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.main_fragment, systemFragment)
+        ft.addToBackStack("save")
+        ft.commit()
+    }
+
+    private fun switchToProcessesFragment(sysId: String) {
+        Log.d(Constants.TAG, "switching to processes fragment")
+        val processFragment = ProcessListFragment.newInstance(sysId)
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.main_fragment, processFragment)
+        ft.addToBackStack("save")
+        ft.commit()
+    }
+
+    private fun switchToGraphFragment(sysId: String) {
+        Log.d(Constants.TAG, "switching to history fragment")
+        val graphFragment = GraphFragment.newInstance(sysId)
+        val ft = supportFragmentManager.beginTransaction()
+        ft.replace(R.id.main_fragment, graphFragment)
         ft.addToBackStack("save")
         ft.commit()
     }

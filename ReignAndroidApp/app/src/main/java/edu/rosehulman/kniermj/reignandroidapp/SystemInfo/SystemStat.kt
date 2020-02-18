@@ -1,4 +1,4 @@
-package edu.rosehulman.kniermj.reignandroidapp.ComandQueue
+package edu.rosehulman.kniermj.reignandroidapp.SystemInfo
 
 import android.os.Parcelable
 import com.google.firebase.Timestamp
@@ -9,21 +9,24 @@ import edu.rosehulman.kniermj.reignandroidapp.SystemList.ComputerSystem
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class CommandQueueItem(
-    var commandInput: String = "",
-    var commandOutput: String = "",
-    var order: Int = 0
+data class SystemStat(
+    var cpuUsage: Float = 0f,
+    var memUsage: Float = 0f,
+    var memFree: Float = 0f
+
 ) : Parcelable {
+
     @get:Exclude
     var id = ""
     @ServerTimestamp
     var creation: Timestamp? = null
 
     companion object {
-        fun fromSnapshot(snapshot: DocumentSnapshot): CommandQueueItem {
-            val loadedCommand = snapshot.toObject(CommandQueueItem::class.java)!!
-            loadedCommand.id = snapshot.id
-            return loadedCommand
+        fun fromSnapshot(snapshot: DocumentSnapshot): SystemStat {
+            val loadedStat = snapshot.toObject(SystemStat::class.java)!!
+            loadedStat.id = snapshot.id
+            return loadedStat
         }
     }
+
 }

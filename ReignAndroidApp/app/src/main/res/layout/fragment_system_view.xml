@@ -38,11 +38,14 @@
             android:layout_height="wrap_content"
             android:text="@string/default_cpu_percent"
             android:textSize="20sp"/>
-        <View
+        <ProgressBar
+            android:id="@+id/cpu_percent_bar"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_red_light"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:max="100"
+            android:progress="0"
             />
     </LinearLayout>
     <LinearLayout
@@ -54,17 +57,20 @@
         android:layout_below="@id/cpu_data"
         android:orientation="horizontal">
         <TextView
-            android:id="@+id/CPU_Percent"
+            android:id="@+id/mem_percent_text"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="@string/default_mem_percent"
             android:textSize="20sp"/>
-        <View
+        <ProgressBar
+            android:id="@+id/mem_percent_bar"
             android:layout_width="0dp"
             android:layout_weight="3"
             android:layout_height="match_parent"
-            android:background="@android:color/holo_green_light"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:max="100"
+            android:progress="0"
             />
     </LinearLayout>
 
@@ -77,6 +83,8 @@
         android:layout_marginBottom="10dp"
         android:textSize="20sp"
         android:text="@string/view_processes"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"
         />
     <Button
         android:id="@+id/button_view_history"
@@ -87,6 +95,8 @@
         android:layout_marginBottom="30dp"
         android:textSize="20sp"
         android:text="@string/view_history"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary"
         />
     <TextView
         android:id="@+id/command_line"
@@ -108,20 +118,24 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@android:color/holo_blue_light">
+            android:background="@color/colorPrimaryDark">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/queue"
-                android:layout_margin="20dp"/>
+                android:textSize="20sp"
+                android:layout_margin="20dp"
+                android:textColor="@android:color/white"/>
             <TextView
                 android:id="@+id/queue_size_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/deafult_queue_size"
                 android:gravity="center"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"
@@ -129,20 +143,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginLeft="20dp"
-            android:background="@android:color/holo_blue_light">
+            android:background="@color/colorPrimaryDark">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/output"
-                android:layout_margin="10dp"/>
+                android:layout_margin="10dp"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"/>
             <TextView
                 android:id="@+id/history_size_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/deafult_queue_size"
                 android:gravity="center"
-                android:layout_margin="20dp"/>
+                android:layout_margin="20dp"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"/>
         </LinearLayout>
 
     </LinearLayout>
@@ -158,7 +176,9 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:text="@string/queue"/>
+            android:text="@string/queue"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimary"/>
         <Button
             android:id="@+id/button_output_view"
             android:layout_width="0dp"
@@ -166,7 +186,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:textSize="20sp"
-            android:text="@string/output"/>
+            android:text="@string/output"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimary"/>
 
     </LinearLayout>
 

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.rosehulman.kniermj.reignandroidapp.Constants
 import edu.rosehulman.kniermj.reignandroidapp.R
+import edu.rosehulman.kniermj.reignandroidapp.Utlis.SwipeDeletionHelper
 import kotlinx.android.synthetic.main.dialog_add_system.view.*
 import kotlinx.android.synthetic.main.fragment_system_list_view.view.*
 
@@ -34,6 +35,11 @@ class SystemListFragment: Fragment() {
         adapter = SystemListAdapter(context!!,uid ?: "", listener)
         view.recycler_view.adapter = adapter
         view.recycler_view.layoutManager = LinearLayoutManager(activity)
+
+        val swipeHelper = SwipeDeletionHelper(adapter!!)
+        val helper = ItemTouchHelper(swipeHelper)
+        helper.attachToRecyclerView(view.recycler_view)
+
         setHasOptionsMenu(true)
 
         view.fab.setOnClickListener({

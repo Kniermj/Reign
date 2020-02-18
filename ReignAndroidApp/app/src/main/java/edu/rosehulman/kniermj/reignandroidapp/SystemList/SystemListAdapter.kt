@@ -9,12 +9,15 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import edu.rosehulman.kniermj.reignandroidapp.Constants
 import edu.rosehulman.kniermj.reignandroidapp.R
+import edu.rosehulman.kniermj.reignandroidapp.Utlis.SwipeDeletionHelper
+import edu.rosehulman.kniermj.reignandroidapp.Utlis.SwipeToDelete
 
 class SystemListAdapter(
     var context: Context,
     var uid: String,
     val listener: OnSystemSelectlistener?):
-    RecyclerView.Adapter<SystemViewHolder>() {
+    RecyclerView.Adapter<SystemViewHolder>(),
+    SwipeToDelete{
 
     private var systemList = ArrayList<ComputerSystem>()
     private val requestRef = FirebaseFirestore.getInstance()
@@ -37,7 +40,7 @@ class SystemListAdapter(
                 val systemItem = ComputerSystem.fromSnapshot(documentChange.document)
                 when (documentChange.type) {
                     DocumentChange.Type.ADDED -> {
-                        Log.d(Constants.TAG, "system added to 0")
+                        Log.d(Constants.TAG, "system added to 0 ${systemItem}")
                         systemList.add(0, systemItem)
                         notifyItemInserted(0)
                     }
@@ -60,7 +63,7 @@ class SystemListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SystemViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.system_card_view, parent, false)
-        return SystemViewHolder(view, this)
+        return SystemViewHolder(view, this, context)
     }
 
     override fun getItemCount(): Int {
@@ -69,6 +72,10 @@ class SystemListAdapter(
 
     override fun onBindViewHolder(holder: SystemViewHolder, position: Int) {
         holder.bind(systemList[position])
+    }
+
+    override fun remove(position: Int) {
+        sysRef.document(systemList.get(position).id).update("owner", "")
     }
 
     public fun sendAddRequest(request: SystemRequest){

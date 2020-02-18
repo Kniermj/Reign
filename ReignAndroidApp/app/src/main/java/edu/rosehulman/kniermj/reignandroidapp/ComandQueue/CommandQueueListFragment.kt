@@ -6,13 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import edu.rosehulman.kniermj.reignandroidapp.Constants
 import edu.rosehulman.kniermj.reignandroidapp.R
-import edu.rosehulman.kniermj.reignandroidapp.SystemList.SystemRequest
+import edu.rosehulman.kniermj.reignandroidapp.Utlis.SwipeDeletionHelper
 import kotlinx.android.synthetic.main.dialog_add_command.view.*
-import kotlinx.android.synthetic.main.dialog_add_system.view.*
-import kotlinx.android.synthetic.main.fragment_system_list_view.view.*
+import kotlinx.android.synthetic.main.fragment_command_queue_list.view.*
+
 
 class CommandQueueListFragment: Fragment() {
 
@@ -28,15 +29,19 @@ class CommandQueueListFragment: Fragment() {
         }
         val view = inflater.inflate(R.layout.fragment_command_queue_list, container, false)
 
-        adapter = CommandQueueListAdapter(sysId ?: "", context!!)
+        adapter = CommandQueueListAdapter(sysId ?: "", context!!, view)
         view.recycler_view.adapter = adapter
         view.recycler_view.layoutManager = LinearLayoutManager(activity)
-        setHasOptionsMenu(true)
 
         view.fab.setOnClickListener({
             Log.d(Constants.TAG, "clicked")
             displayAddCommandDialog()
         })
+
+        val swipeHelperDel = SwipeDeletionHelper(adapter!!)
+        val helperDel = ItemTouchHelper(swipeHelperDel)
+        helperDel.attachToRecyclerView(view.recycler_view)
+
 
         return view
     }
@@ -52,10 +57,11 @@ class CommandQueueListFragment: Fragment() {
 
         builder.setPositiveButton(android.R.string.ok) { _, _ ->
             val commandString = view.command_entry.text.toString()
-            val newCommand = CommandQueueItem(commandString, "")
+            val newCommand = CommandQueueItem(commandString, "", adapter?.itemCount ?: 0)
             adapter?.addCommandToQueue(newCommand);
 
         }
+
         builder.setNegativeButton(android.R.string.cancel, null)
         builder.show()
     }

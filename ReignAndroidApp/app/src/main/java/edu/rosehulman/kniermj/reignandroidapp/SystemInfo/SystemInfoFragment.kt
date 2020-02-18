@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import edu.rosehulman.kniermj.reignandroidapp.Constants
 import edu.rosehulman.kniermj.reignandroidapp.R
 import edu.rosehulman.kniermj.reignandroidapp.SystemList.ComputerSystem
@@ -35,11 +36,42 @@ class SystemInfoFragment: Fragment() {
             Log.d(Constants.TAG, "history clicked}")
             listener?.onCommandHistorySelected(system?.id ?: "")
         }
+        view.button_view_Processes.setOnClickListener {
+            Log.d(Constants.TAG, "processes clicked}")
+            listener?.onProcessesSelected(system?.id ?: "")
+        }
+        view.button_view_history.setOnClickListener {
+            Log.d(Constants.TAG, "history clicked}")
+            listener?.onHistoryGraphPressed(system?.id ?: "")
+        }
 
         queueSizeListener(view)
         historySizeListener(view)
+        systemStatusListener(view)
 
         return view
+    }
+
+    private fun systemStatusListener(view: View){
+        val statusRef = FirebaseFirestore.getInstance()
+            .collection("systems")
+            .document(system!!.id)
+            .collection("Status")
+        statusRef
+            .limit(1)
+            .orderBy("creation", Query.Direction.DESCENDING)
+            .addSnapshotListener { querySnapshot, e ->
+                if(e != null){
+                    Log.d(Constants.TAG, e.toString())
+                    return@addSnapshotListener
+                }
+                val status = SystemStat.fromSnapshot(querySnapshot?.documents?.get(0)!!);
+                val memPercent = (status.memUsage / (status.memFree + status.memUsage)) * 100
+                view.mem_percent_bar.setProgress(memPercent.toInt(), true)
+                view.cpu_percent_bar.setProgress(status.cpuUsage.toInt(), true)
+                view.cpu_percent_text.setText("CPU:${status.cpuUsage.toInt().toString()}%")
+                view.mem_percent_text.setText("MEM:${memPercent.toInt().toString()}%")
+            }
     }
 
     private fun queueSizeListener(view: View){
