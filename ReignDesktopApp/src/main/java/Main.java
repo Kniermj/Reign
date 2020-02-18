@@ -38,6 +38,7 @@ public class Main {
 
         CommandFeeder feeder = new CommandFeederQueue(check.identity, db);
         CommandOutput commandOut = new FirestoreCommandOutput(check.identity, db);
+
         CommandLineExecution command  = new CommandLineExecution(feeder, commandOut);
 
         FirestoreProcessOutput processoutput = new FirestoreProcessOutput(check.identity, db);

@@ -12,7 +12,7 @@ public class CommandFeederTest implements CommandFeeder {
     public CommandObject getNextCommand() {
         if(numberOfRuns > 0){
             numberOfRuns--;
-            return new CommandObject("dir");
+            return new CommandObject("help");
         }else{
             return null;
         }

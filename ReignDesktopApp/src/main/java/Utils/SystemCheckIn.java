@@ -87,6 +87,7 @@ public class SystemCheckIn {
         System.out.println("writing system id");
         JSONObject obj = new JSONObject();
         obj.put("systemID", id);
+        obj.put("accessToken", "temp");
         try{
             FileWriter file = new FileWriter("system_settings.json");
             file.write(obj.toJSONString());

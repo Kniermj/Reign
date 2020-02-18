@@ -13,13 +13,10 @@ public class RegisterUser {
 
     private SystemIdentity identity;
     private Firestore db;
-    private String accessToken;
 
     public RegisterUser(Firestore db, SystemIdentity identity){
         this.db = db;
         this.identity = identity;
-        accessToken = getAccessToken();
-        System.out.println("access token found to be " + accessToken);
         listenForNewUsers();
 
     }
@@ -61,7 +58,7 @@ public class RegisterUser {
             for (DocumentChange item: snapshots.getDocumentChanges()) {
                 if(item.getType() == DocumentChange.Type.ADDED || item.getType() == DocumentChange.Type.MODIFIED){
                     AccessRequest req = item.getDocument().toObject(AccessRequest.class);
-                    if(req.systemToken.equals(accessToken)){
+                    if(req.systemToken.equals(getAccessToken())){
                         addUserRefrence(req);
                     }
                     removeAccessRequest(req);
