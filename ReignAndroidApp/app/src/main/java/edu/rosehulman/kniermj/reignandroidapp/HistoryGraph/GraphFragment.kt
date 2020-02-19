@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.*
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -22,6 +20,7 @@ class GraphFragment: Fragment() {
     var memEntries = ArrayList<Entry>()
     var statusReports = ArrayList<SystemStat>();
     var cpuFocus = true;
+    var count = 0;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +30,10 @@ class GraphFragment: Fragment() {
             sysId = it.getString(GraphFragment.ARG_SYS)
         }
         val view = inflater.inflate(R.layout.history_graph, container, false)
+
         view.history_line_chart.setTouchEnabled(true)
         view.history_line_chart.setPinchZoom(true)
+
         addListeners()
         setHasOptionsMenu(true)
         return view
@@ -53,7 +54,7 @@ class GraphFragment: Fragment() {
                 Log.d(Constants.TAG, "loading for graph")
                 val item = SystemStat.fromSnapshot(documentChange.document)
                 val xValue = item.creation?.seconds?.toFloat()
-                val memPercent = (item.cpuUsage / (item.memUsage + item.memFree)) * 100
+                val memPercent = (item.memUsage / (item.memFree + item.memUsage)) * 100
                 when (documentChange.type) {
                     DocumentChange.Type.ADDED -> {
                         statusReports.add(item)
@@ -105,9 +106,9 @@ class GraphFragment: Fragment() {
             set = LineDataSet(memEntries, "MEM")
         }
         set.setDrawFilled(true)
+        view?.history_line_chart?.invalidate()
         view?.history_line_chart?.data = LineData(set)
         view?.history_line_chart?.notifyDataSetChanged()
-        view?.history_line_chart?.invalidate()
     }
 
     private fun switchTile(item: MenuItem) {

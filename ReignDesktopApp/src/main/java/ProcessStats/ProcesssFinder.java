@@ -57,6 +57,7 @@ public class ProcesssFinder implements Runnable {
                 writer.write("(get-process| ft -HideTableHeaders); echo --EOF--\n");
                 writer.flush();
                 line = reader.readLine();
+
                 while (line  != null && !line.trim().equals("--EOF--")) {
                     if(processHeadingFilter(line)){
                         ProcessStat ps = makeFromCMDLine(line);
@@ -74,6 +75,7 @@ public class ProcesssFinder implements Runnable {
 
     private boolean processHeadingFilter(String line){
         if(line.split("\\s+").length >= 8){
+
             return true;
         }
         return false;

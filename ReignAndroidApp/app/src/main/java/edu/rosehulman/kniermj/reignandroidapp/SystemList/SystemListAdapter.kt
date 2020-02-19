@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
+import edu.rosehulman.kniermj.reignandroidapp.ComandQueue.CommandQueueItem
 import edu.rosehulman.kniermj.reignandroidapp.Constants
 import edu.rosehulman.kniermj.reignandroidapp.R
 import edu.rosehulman.kniermj.reignandroidapp.Utlis.SwipeDeletionHelper
@@ -84,5 +85,17 @@ class SystemListAdapter(
 
     fun onSystemPressed(pos: Int) {
         listener?.onSystemSelected(systemList.get(pos))
+    }
+
+    fun sendShutdownRequestDisplay(position: Int) {
+        val builder = androidx.appcompat.app.AlertDialog.Builder(context)
+        builder.setTitle("Shutdown System")
+        builder.setMessage("This will turn off ${systemList[position].name}. To restart this you will need access to the system")
+        builder.setIcon(android.R.drawable.ic_input_delete)
+        builder.setPositiveButton(android.R.string.ok) { _, _ ->
+            sysRef.document(systemList[position].id).update("active", false)
+        }
+        builder.setNegativeButton(android.R.string.cancel, null)
+        builder.show()
     }
 }

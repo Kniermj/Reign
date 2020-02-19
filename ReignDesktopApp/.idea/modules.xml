@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.ReignDesktopApp.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.ReignDesktopApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.ReignDesktopApp.main.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.ReignDesktopApp.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/org.example.ReignDesktopApp.test.iml" filepath="$PROJECT_DIR$/.idea/modules/org.example.ReignDesktopApp.test.iml" />
+    </modules>
+  </component>
+</project>

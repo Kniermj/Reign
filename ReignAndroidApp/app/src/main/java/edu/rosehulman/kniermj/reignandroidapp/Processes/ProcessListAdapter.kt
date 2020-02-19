@@ -46,9 +46,9 @@ class ProcessListAdapter(var sysId: String, var context: Context): RecyclerView.
                     val processItem = ProcessItem.fromSnapshot(documentChange.document)
                     when (documentChange.type) {
                         DocumentChange.Type.ADDED -> {
-
-                            processList.add(0, processItem)
-                            notifyItemInserted(0)
+                            var index = processList.indexOfLast{ it.processName < processItem.processName } + 1
+                            processList.add(index, processItem)
+                            notifyItemInserted(index)
                         }
                         DocumentChange.Type.MODIFIED -> {
                             val index = processList.indexOfFirst { it.id == processItem.id }

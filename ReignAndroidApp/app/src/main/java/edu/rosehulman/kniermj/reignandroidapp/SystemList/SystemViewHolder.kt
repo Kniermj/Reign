@@ -27,6 +27,11 @@ class SystemViewHolder: RecyclerView.ViewHolder {
             true
         }
 
+        itemView.setOnLongClickListener {
+            adapter.sendShutdownRequestDisplay(adapterPosition)
+            true
+        }
+
     }
 
     fun bind(system: ComputerSystem) {
